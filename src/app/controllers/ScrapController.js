@@ -73,6 +73,23 @@ class ScrapController {
       return res.json(error);
     }
   }
+
+  async delete(req, res) {
+    try {
+      const scrap = await Scrap.findByPk(req.params.id);
+
+      if(!scrap) {
+        return res.status(404).json({error:'Scrap do not find'})
+      }
+
+      await scrap.destroy();
+
+      return res.status(204).send();
+    
+    } catch (error) {
+      return res.json(error);
+    }
+  }
 }
 
 export default new ScrapController();
