@@ -78,8 +78,12 @@ class ScrapController {
     try {
       const scrap = await Scrap.findByPk(req.params.id);
 
-      if(!scrap) {
-        return res.status(404).json({error:'Scrap do not find'})
+      if (!scrap) {
+        return res.status(404).json({ error: 'Scrap do not find' });
+      }
+
+      if (scrap.user_id !== req.userId) {
+        return res.status(401).json({error:" You do not own this scrap! "})
       }
 
       await scrap.destroy();
